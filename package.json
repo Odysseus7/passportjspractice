@@ -1,0 +1,19 @@
+{
+  "name": "passportjspractice",
+  "version": "1.0.0",
+  "description": "practice project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Odysseus7/passportjspractice.git"
+  },
+  "author": "Chalita Ndunu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Odysseus7/passportjspractice/issues"
+  },
+  "homepage": "https://github.com/Odysseus7/passportjspractice#readme"
+}
