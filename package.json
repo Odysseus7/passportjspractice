@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Odysseus7/passportjspractice/issues"
   },
-  "homepage": "https://github.com/Odysseus7/passportjspractice#readme"
+  "homepage": "https://github.com/Odysseus7/passportjspractice#readme",
+  "dependencies": {
+    "express-session": "^1.17.1"
+  }
 }

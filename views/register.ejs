@@ -5,33 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">;
-  <title>Login</title>
+  <title>Register</title>
 </head>
 <body>
   <form action="/register" method="POST" class="form-signin">
     <div class="text-center mb-4">
-      <img class="mb-4" src="https://miro.medium.com/max/400/1*YI1tt4kGzvea-v4dAhZ90w.png" alt="" width="72" height="72">
+      <a href="/"><img class="mb-4" src="https://miro.medium.com/max/400/1*YI1tt4kGzvea-v4dAhZ90w.png" alt="" width="72" height="72"></a>
       <h1 class="h3 mb-3 font-weight-normal">Practicing with passportjs</h1>
-      <p>Log in</p>
+      <p>Register</p>
     </div>
   
     <div class="form-label-group">
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="text" id="inputFullName" class="form-control" placeholder="Full Name" name="fullName" required autofocus>
+      <label for="inputEmail">Full name</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
       <label for="inputEmail">Email address</label>
     </div>
   
     <div class="form-label-group">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
       <label for="inputPassword">Password</label>
     </div>
-  
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button><br>
-    <a href="/register" class="btn btn-lg btn-secondary btn-block">Sign up</a>
     <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
   </form>  
 </body>
