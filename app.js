@@ -49,22 +49,7 @@ passport.use( new LocalStrategy({
         passwordField: "password",
         passReqToCallback: true
     }, 
-    (email, password, done) => {
-        User.findOne({
-            email: email
-        }, (error, user) => {
-            if (error) {
-                return done(error);
-            }
-            if (!user) {
-                return done(null, false, {
-                    message: 'Username or password incorrect'
-                });
-            }
-
-            return done(null, user);
-        });
-    }
+    User.authenticate()
 ));
 
 passport.serializeUser(function(user, done) {
@@ -79,6 +64,34 @@ passport.deserializeUser(function(id, done) {
 
 app.get('/', (req, res) => {
     res.render("index");
+});
+
+app.post('/', (req, res) => {
+    //authenticate user and login
+    var authenticate = User.authenticate();
+    authenticate(req.body.email, req.body.password, function(err, user) {
+        
+        if (user) { 
+            req.login(user, function(err) {
+                if (err) { 
+                    console.log(err);
+                    res.redirect("/register");
+                } else {
+                    res.redirect("/home");
+                }
+                
+            });
+        } else {
+            console.log(err);
+            res.redirect("/")
+        }
+    
+    });
+});
+
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
 });
 
 app.get("/register", (req, res) => {
@@ -123,8 +136,8 @@ app.get("/home", (req, res) => {
     } else {
         res.redirect("/");
     }
-
 });
+
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
