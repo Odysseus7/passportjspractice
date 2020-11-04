@@ -34,8 +34,8 @@ mongoose.connect(`mongodb+srv://practice:${process.env.MONGODB_PASSWORD}@cluster
 mongoose.set("useCreateIndex", true);
 
 const userSchema = new mongoose.Schema({
-    email: String,
     fullName: String,
+    email: String,
     password: String
 });
 
@@ -43,23 +43,27 @@ userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model("User", userSchema);
 
-passport.use(new LocalStrategy({
+passport.use( new LocalStrategy({
+        // use email instead of username
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true
-    },
-    
-    function(username, password, done) {
-      User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (!user.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
-      });
+    }, 
+    (email, password, done) => {
+        User.findOne({
+            email: email
+        }, (error, user) => {
+            if (error) {
+                return done(error);
+            }
+            if (!user) {
+                return done(null, false, {
+                    message: 'Username or password incorrect'
+                });
+            }
+
+            return done(null, user);
+        });
     }
 ));
 
@@ -82,14 +86,15 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    User.register({username:'username', active: false}, 'password', function(err, user) {
+    User.register({username: req.body.email, active: false}, req.body.password, function(err, user) {
         if (err) { 
             console.log(err); 
         }
        
+        //authenticate user and login
         var authenticate = User.authenticate();
-        authenticate({ email: req.body.email }, req.body.password, function(err, user) {
-            if (user) { 
+        authenticate(req.body.email, req.body.password, function(err, result) {
+            if (result) { 
                 req.login(user, function(err) {
                     if (err) { 
                         console.log(err);
