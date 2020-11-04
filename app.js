@@ -86,7 +86,8 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    User.register({username: req.body.email, active: false}, req.body.password, function(err, user) {
+    User.register({username: req.body.email, fullName: req.body.fullName, active: false}, req.body.password, function(err, user) {
+        
         if (err) { 
             console.log(err); 
         }
@@ -94,6 +95,7 @@ app.post("/register", (req, res) => {
         //authenticate user and login
         var authenticate = User.authenticate();
         authenticate(req.body.email, req.body.password, function(err, result) {
+            
             if (result) { 
                 req.login(user, function(err) {
                     if (err) { 
